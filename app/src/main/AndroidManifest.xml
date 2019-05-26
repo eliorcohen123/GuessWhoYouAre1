@@ -23,8 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MeFavorites" />
+        <activity android:name=".FavoritesFace" />
         <activity android:name=".AddFace" />
+        <activity android:name=".DeleteFace" />
+        <activity android:name=".DeleteAllDataFavorites" />
     </application>
 
 </manifest>

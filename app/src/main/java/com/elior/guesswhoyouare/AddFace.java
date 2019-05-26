@@ -68,7 +68,7 @@ public class AddFace extends AppCompatActivity {
                 faceViewModelFavorites.insert(faceFavorites);
 
                 // Pass from AddMapFromInternet to ActivityFavorites
-                Intent intentAddInternetToMain = new Intent(AddFace.this, MeFavorites.class);
+                Intent intentAddInternetToMain = new Intent(AddFace.this, FavoritesFace.class);
                 startActivity(intentAddInternetToMain);
             }
         });

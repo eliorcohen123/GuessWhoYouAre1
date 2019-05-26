@@ -20,16 +20,16 @@ public class FaceListAdapterFavorites extends RecyclerView.Adapter<FaceListAdapt
     class WordViewHolder extends RecyclerView.ViewHolder {
 
         private TextView age1, gender1, appearance1;
-        private ImageView image3;
-        private LinearLayout linearLayout;
+        private ImageView image1;
+        private LinearLayout linearLayout1;
 
         private WordViewHolder(View itemView) {
             super(itemView);
             age1 = itemView.findViewById(R.id.myAge1);
             gender1 = itemView.findViewById(R.id.myGender1);
             appearance1 = itemView.findViewById(R.id.myAppearance1);
-            image3 = itemView.findViewById(R.id.myImage1);
-            linearLayout = itemView.findViewById(R.id.linearLayout1);
+            image1 = itemView.findViewById(R.id.myImage1);
+            linearLayout1 = itemView.findViewById(R.id.linearLayout1);
         }
     }
 
@@ -56,11 +56,11 @@ public class FaceListAdapterFavorites extends RecyclerView.Adapter<FaceListAdapt
                 holder.appearance1.setText(current.getAppearance());
 
                 Bitmap bmp = BitmapFactory.decodeByteArray(current.getImage(), 0, current.getImage().length);
-                holder.image3.setImageBitmap(bmp);
+                holder.image1.setImageBitmap(bmp);
             } catch (Exception e) {
 
             }
-            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            holder.linearLayout1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 

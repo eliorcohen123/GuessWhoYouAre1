@@ -9,9 +9,15 @@ import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -39,7 +45,7 @@ import clarifai2.dto.input.ClarifaiInput;
 import clarifai2.dto.model.output.ClarifaiOutput;
 import clarifai2.dto.prediction.Region;
 
-public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback {
+public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback, NavigationView.OnNavigationItemSelectedListener {
 
     private TextView myGender, myAge, myAppearance;
     private Button btnOpenExtCam, start, capture, stop, btnSave;
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private SurfaceHolder surfaceHolder;
     private Camera.PictureCallback rawCallback, jpegCallback;
     private Camera.ShutterCallback shutterCallback;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,33 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         // Detect methods whose names start with penalty and solve the crash
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        (this).setSupportActionBar(toolbar);
+
+        drawer = findViewById(R.id.drawer_layout);
+
+        findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // open right drawer
+
+                if (drawer.isDrawerOpen(GravityCompat.END)) {
+                    drawer.closeDrawer(GravityCompat.END);
+                } else
+                    drawer.openDrawer(GravityCompat.END);
+            }
+        });
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.setDrawerIndicatorEnabled(false);
+        drawer.addDrawerListener(toggle);
+
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         initVar();
         camera();
@@ -84,6 +118,31 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         myImage = findViewById(R.id.myImage);
         // SurfaceView
         surfaceView = findViewById(R.id.surface_camera);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.favorites) {
+            Intent intentFavorite = new Intent(this, FavoritesFace.class);
+            startActivity(intentFavorite);
+        } else if (id == R.id.shareIntentApp) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT,
+                    "Hey check out my app at: https://play.google.com/store/apps/details?id=com.elior.guesswhoyouare");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        } else if (id == R.id.exit) {
+            ActivityCompat.finishAffinity(this);
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.END);
+        return true;
     }
 
     private void camera() {
@@ -263,8 +322,12 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     // Stops taking pictures on the internal camera
     private void stop_camera() {
-        camera.stopPreview();
-        camera.release();
+        try {
+            camera.stopPreview();
+            camera.release();
+        } catch (Exception e) {
+
+        }
     }
 
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {

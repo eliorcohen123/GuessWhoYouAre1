@@ -21,8 +21,8 @@ public interface FaceDaoFavorites {
     @Query("DELETE FROM face_table_favorites")
     void deleteAll();
 
-    @Query("DELETE FROM face_table_favorites WHERE age= :name_")
-    void deleteByName(String name_);
+    @Query("DELETE FROM face_table_favorites WHERE age= :age_")
+    void deleteByName(int age_);
 
     @Query("DELETE FROM face_table_favorites WHERE ID= :id_")
     void deleteByID(Long id_);

@@ -21,8 +21,8 @@ public class FaceViewModelFavorites extends AndroidViewModel {
         return mAllFaceFavorites;
     }
 
-    public void insert(FaceFavorites word) {
-        faceRepositoryFavorites.insert(word);
+    public void insert(FaceFavorites face) {
+        faceRepositoryFavorites.insert(face);
     }
 
     public void deleteAll() {

@@ -14,4 +14,6 @@
     <string name="masculine">masculine</string>
     <string name="feminine">feminine</string>
     <string name="child_file">picture</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
