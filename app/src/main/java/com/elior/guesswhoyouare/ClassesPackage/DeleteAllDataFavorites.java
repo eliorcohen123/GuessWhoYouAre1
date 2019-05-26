@@ -1,14 +1,14 @@
-package com.elior.guesswhoyouare;
+package com.elior.guesswhoyouare.ClassesPackage;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.elior.guesswhoyouare.OtherPackage.NearByApplication;
+import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 
 public class DeleteAllDataFavorites extends AppCompatActivity {

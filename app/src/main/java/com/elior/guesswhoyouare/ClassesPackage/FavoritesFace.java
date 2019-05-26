@@ -1,4 +1,4 @@
-package com.elior.guesswhoyouare;
+package com.elior.guesswhoyouare.ClassesPackage;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -31,6 +31,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.elior.guesswhoyouare.AdapterPackage.FaceListAdapterFavorites;
+import com.elior.guesswhoyouare.OtherPackage.FaceModel;
+import com.elior.guesswhoyouare.OtherPackage.ItemDecoration;
+import com.elior.guesswhoyouare.OtherPackage.NetWorkDataProviderFavorites;
+import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.IFaceDataReceived;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;

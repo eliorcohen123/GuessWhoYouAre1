@@ -1,4 +1,4 @@
-package com.elior.guesswhoyouare;
+package com.elior.guesswhoyouare.ClassesPackage;
 
 import android.Manifest;
 import android.app.Activity;
@@ -26,6 +26,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.elior.guesswhoyouare.R;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

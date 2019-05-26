@@ -1,4 +1,4 @@
-package com.elior.guesswhoyouare;
+package com.elior.guesswhoyouare.OtherPackage;
 
 import java.io.Serializable;
 

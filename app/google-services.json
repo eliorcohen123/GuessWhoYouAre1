@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "509436429424",
+    "firebase_url": "https://guesswhoyouare-96327.firebaseio.com",
+    "project_id": "guesswhoyouare-96327",
+    "storage_bucket": "guesswhoyouare-96327.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509436429424:android:d6a6551d76a88060",
+        "android_client_info": {
+          "package_name": "com.elior.guesswhoyouare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509436429424-ipoh622m0rtqo8ks652shki5n14iblm3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcyeyMk3cePx7JQ_ddX0Hxg-gqouMUBnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509436429424-ipoh622m0rtqo8ks652shki5n14iblm3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

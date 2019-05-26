@@ -1,4 +1,4 @@
-package com.elior.guesswhoyouare;
+package com.elior.guesswhoyouare.OtherPackage;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
