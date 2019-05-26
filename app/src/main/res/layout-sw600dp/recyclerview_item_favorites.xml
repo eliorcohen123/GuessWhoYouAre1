@@ -62,7 +62,7 @@
                         android:id="@+id/myAge1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="5dp"
                         android:textColor="@color/colorWhite"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -84,7 +84,7 @@
                         android:id="@+id/myGender1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="5dp"
                         android:textColor="@color/colorWhite"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -106,7 +106,7 @@
                         android:id="@+id/myAppearance1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="5dp"
                         android:textColor="@color/colorWhite"
                         android:textSize="20sp" />
                 </LinearLayout>

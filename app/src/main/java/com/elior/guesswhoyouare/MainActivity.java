@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
@@ -257,7 +258,12 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
                         // Put Image
                         myImage.setImageBitmap(bitmap);
-                        myImage.setRotation(90);
+
+                        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                            myImage.setRotation(90);
+                        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                            myImage.setRotation(180);
+                        }
 
                         btnSave.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -295,7 +301,11 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     // Take picture from the internal camera
     private void captureImage() {
         // TODO Auto-generated method stub
-        camera.takePicture(shutterCallback, rawCallback, jpegCallback);
+        try {
+            camera.takePicture(shutterCallback, rawCallback, jpegCallback);
+        } catch (Exception e) {
+
+        }
     }
 
     // Open internal camera
@@ -317,7 +327,11 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         } catch (Exception e) {
             return;
         }
-        camera.setDisplayOrientation(90);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            camera.setDisplayOrientation(90);
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            camera.setDisplayOrientation(180);
+        }
     }
 
     // Stops taking pictures on the internal camera
@@ -342,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         // TODO Auto-generated method stub
     }
 
-    // Open external camera + option to gallery
+    // Open external camera + option to ext_camera
     private void gallery() {
         btnOpenExtCam.setOnClickListener(new View.OnClickListener() {
             @Override
