@@ -102,7 +102,9 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
         initVar();
         camera();
-        gallery();
+        ext_camera();
+
+        AppRater.app_launched(this);
     }
 
     // Initialize variables
@@ -359,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     }
 
     // Open external camera + option to ext_camera
-    private void gallery() {
+    private void ext_camera() {
         btnOpenExtCam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
