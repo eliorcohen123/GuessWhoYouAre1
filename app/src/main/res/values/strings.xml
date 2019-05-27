@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GuessWhoYouAre</string>
+    <string name="app_name">Guess Who You Are</string>
     <string name="your_gender">Your Gender:</string>
     <string name="your_age">Your Age:</string>
     <string name="your_appearance">Your Appearance:</string>
