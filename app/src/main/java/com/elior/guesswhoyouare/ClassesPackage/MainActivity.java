@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         drawerLayout();
         camera();
         ext_camera();
-
-        AppRater.app_launched(this);
     }
 
     // Initialize variables
@@ -97,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         myImage = findViewById(R.id.myImage);
         // SurfaceView
         surfaceView = findViewById(R.id.surface_camera);
+        // AppRater
+        AppRater.app_launched(this);
     }
 
     private void permissions() {
