@@ -61,8 +61,8 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
 
         initUI();
         showUI();
-        myRecyclerView();
         getData();
+        myRecyclerView();
         enableSwipe();
     }
 
@@ -125,6 +125,11 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         });
     }
 
+    private void getData() {
+        NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
+        dataProvider.getFaceByLocation(this);
+    }
+
     private void myRecyclerView() {
         try {
             adapterFavorites = new FaceListAdapterFavorites(this);
@@ -137,11 +142,6 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         }
 
         mFaceViewModelFavorites = ViewModelProviders.of(this).get(FaceViewModelFavorites.class);
-    }
-
-    private void getData() {
-        NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
-        dataProvider.getFaceByLocation(this);
     }
 
     private void enableSwipe() {
