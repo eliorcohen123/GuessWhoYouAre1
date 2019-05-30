@@ -51,16 +51,30 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     private Paint p = new Paint();
     private DrawerLayout drawer;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        (this).setSupportActionBar(toolbar);
+        initUI();
+        showUI();
+        getData();
+        enableSwipe();
+    }
 
+    private void initUI() {
+        toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
+        recyclerView = findViewById(R.id.face_list);
+    }
+
+    private void showUI() {
+        (this).setSupportActionBar(toolbar);
 
         findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,13 +95,9 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
 
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);  // ID of the SwipeRefreshLayout of FragmentSearch
-
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));  // Colors of the SwipeRefreshLayout of FragmentSearch
-        // Refresh the MapDBHelper of app in ListView of MainActivity
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -113,8 +123,6 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
             }
         });
 
-        recyclerView = findViewById(R.id.face_list);
-
         try {
             adapterFavorites = new FaceListAdapterFavorites(this);
             recyclerView.setAdapter(adapterFavorites);
@@ -126,11 +134,11 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         }
 
         mFaceViewModelFavorites = ViewModelProviders.of(this).get(FaceViewModelFavorites.class);
+    }
 
+    private void getData() {
         NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
         dataProvider.getFaceByLocation(this);
-
-        enableSwipe();
     }
 
     private void enableSwipe() {

@@ -13,6 +13,7 @@ import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 
 public class DeleteAllDataFavorites extends AppCompatActivity {
 
+    private Button btnOK, btnCancel;
     private FaceViewModelFavorites faceViewModelFavorites;
 
     @Override
@@ -20,12 +21,20 @@ public class DeleteAllDataFavorites extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.delete_all_data_favorites);
 
+        initUI();
+        showUI();
+    }
+
+    private void initUI() {
+        btnOK = findViewById(R.id.btnOK);
+        btnCancel = findViewById(R.id.btnCancel);
+    }
+
+    private void showUI() {
         // Button are delete all the data of the Favorites
-        Button button1 = findViewById(R.id.button3);
-        button1.setOnClickListener(new View.OnClickListener() {
+        btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 faceViewModelFavorites = new FaceViewModelFavorites(NearByApplication.getApplication());
                 faceViewModelFavorites.deleteAll();
 
@@ -37,8 +46,7 @@ public class DeleteAllDataFavorites extends AppCompatActivity {
         });
 
         // Button are back to the previous activity
-        Button button2 = findViewById(R.id.button4);
-        button2.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

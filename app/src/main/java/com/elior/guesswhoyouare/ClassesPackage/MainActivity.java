@@ -60,23 +60,56 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private Camera.PictureCallback rawCallback, jpegCallback;
     private Camera.ShutterCallback shutterCallback;
     private DrawerLayout drawer;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initUI();
+        permissions();
+        drawerLayout();
+        camera();
+        ext_camera();
+
+        AppRater.app_launched(this);
+    }
+
+    // Initialize variables
+    private void initUI() {
+        // drawerLayout
+        toolbar = findViewById(R.id.toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        // TextView
+        myGender = findViewById(R.id.myGender);
+        myAge = findViewById(R.id.myAge);
+        myAppearance = findViewById(R.id.myAppearance);
+        // Button
+        start = findViewById(R.id.btnStart);
+        capture = findViewById(R.id.btnCapture);
+        stop = findViewById(R.id.btnStop);
+        btnOpenExtCam = findViewById(R.id.btnGallery);
+        btnSave = findViewById(R.id.btnSave);
+        // ImageView
+        myImage = findViewById(R.id.myImage);
+        // SurfaceView
+        surfaceView = findViewById(R.id.surface_camera);
+    }
+
+    private void permissions() {
         // Get permission for the camera
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
 
         // Detect methods whose names start with penalty and solve the crash
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+    }
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+    private void drawerLayout() {
         (this).setSupportActionBar(toolbar);
-
-        drawer = findViewById(R.id.drawer_layout);
 
         findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,32 +130,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        initVar();
-        camera();
-        ext_camera();
-
-        AppRater.app_launched(this);
-    }
-
-    // Initialize variables
-    private void initVar() {
-        // TextView
-        myGender = findViewById(R.id.myGender);
-        myAge = findViewById(R.id.myAge);
-        myAppearance = findViewById(R.id.myAppearance);
-        // Button
-        start = findViewById(R.id.btnStart);
-        capture = findViewById(R.id.btnCapture);
-        stop = findViewById(R.id.btnStop);
-        btnOpenExtCam = findViewById(R.id.btnGallery);
-        btnSave = findViewById(R.id.btnSave);
-        // ImageView
-        myImage = findViewById(R.id.myImage);
-        // SurfaceView
-        surfaceView = findViewById(R.id.surface_camera);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

@@ -21,24 +21,37 @@ import java.io.ByteArrayOutputStream;
 public class AddFace extends AppCompatActivity {
 
     private FaceViewModelFavorites faceViewModelFavorites;
-    private TextView age, gender, appearance;
+    private TextView age, gender, appearance, textViewOK;
     private ImageView imageView1;
+    private Button btnBack;
+    private String age3, gender3, appearance3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_face);
 
+        initUI();
+        showUI();
+    }
+
+    private void initUI() {
         Bundle extras = getIntent().getExtras();
-        String age3 = extras.getString("age");
-        String gender3 = extras.getString("gender");
-        String appearance3 = extras.getString("appearance");
+        age3 = extras.getString("age");
+        gender3 = extras.getString("gender");
+        appearance3 = extras.getString("appearance");
 
         age = findViewById(R.id.age2);  // ID of the age
         gender = findViewById(R.id.gender2);  // ID of the gender
         appearance = findViewById(R.id.appearance2);  // ID of the appearance
         imageView1 = findViewById(R.id.imageViewMe2);  // ID of the image
 
+        textViewOK = findViewById(R.id.textViewOK);
+
+        btnBack = findViewById(R.id.btnBack);
+    }
+
+    private void showUI() {
         Bitmap b = BitmapFactory.decodeByteArray(getIntent().getByteArrayExtra("byteArray"), 0, getIntent().getByteArrayExtra("byteArray").length);
         imageView1.setImageBitmap(b);
 
@@ -51,8 +64,7 @@ public class AddFace extends AppCompatActivity {
         appearance.setText(appearance3);
 
         // Button that does the following:
-        TextView textView1 = findViewById(R.id.textViewOK);
-        textView1.setOnClickListener(new View.OnClickListener() {
+        textViewOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int age1 = Integer.parseInt(age.getText().toString());  // GetText of the name
@@ -75,8 +87,7 @@ public class AddFace extends AppCompatActivity {
         });
 
         // Button are back to the previous activity
-        Button button3 = findViewById(R.id.btnBack);
-        button3.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

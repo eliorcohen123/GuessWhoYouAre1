@@ -9,14 +9,24 @@ import com.elior.guesswhoyouare.R;
 
 public class DeleteFace extends AppCompatActivity {
 
+    private Button btnOK;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.delete_face);
 
+        initUI();
+        showUI();
+    }
+
+    private void initUI() {
+        btnOK = findViewById(R.id.btnOK);
+    }
+
+    private void showUI() {
         // A button are passes from DeleteFace to Favorites
-        Button button1 = findViewById(R.id.button13);
-        button1.setOnClickListener(new View.OnClickListener() {
+        btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
