@@ -61,6 +61,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
 
         initUI();
         showUI();
+        myRecyclerView();
         getData();
         enableSwipe();
     }
@@ -122,7 +123,9 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
 
+    private void myRecyclerView() {
         try {
             adapterFavorites = new FaceListAdapterFavorites(this);
             recyclerView.setAdapter(adapterFavorites);
