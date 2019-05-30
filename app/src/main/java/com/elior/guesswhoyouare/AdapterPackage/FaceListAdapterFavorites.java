@@ -7,48 +7,29 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
 
 import java.util.List;
 
-public class FaceListAdapterFavorites extends RecyclerView.Adapter<FaceListAdapterFavorites.WordViewHolder> {
-
-    class WordViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView age1, gender1, appearance1;
-        private ImageView image1;
-        private LinearLayout linearLayout1;
-
-        private WordViewHolder(View itemView) {
-            super(itemView);
-            age1 = itemView.findViewById(R.id.myAge1);
-            gender1 = itemView.findViewById(R.id.myGender1);
-            appearance1 = itemView.findViewById(R.id.myAppearance1);
-            image1 = itemView.findViewById(R.id.myImage1);
-            linearLayout1 = itemView.findViewById(R.id.linearLayout1);
-        }
-    }
+public class FaceListAdapterFavorites extends RecyclerView.Adapter<FaceViewHolder> {
 
     private final LayoutInflater mInflater;
-    private List<FaceFavorites> mFaceList; // Cached copy of words
+    private List<FaceFavorites> mFaceList;
 
     public FaceListAdapterFavorites(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.recyclerview_item_favorites, parent, false);
-        return new WordViewHolder(itemView);
+        return new FaceViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final WordViewHolder holder, final int position) {
+    public void onBindViewHolder(final FaceViewHolder holder, final int position) {
         if (mFaceList != null) {
             final FaceFavorites current = mFaceList.get(position);
             try {
