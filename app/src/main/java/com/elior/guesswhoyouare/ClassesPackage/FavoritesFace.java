@@ -53,6 +53,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     private SwipeRefreshLayout swipeRefreshLayout;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    private NetWorkDataProviderFavorites netWorkDataProviderFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,8 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         navigationView = findViewById(R.id.nav_view);
         swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
         recyclerView = findViewById(R.id.face_list);
+
+        netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
     }
 
     private void showUI() {
@@ -140,8 +143,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     }
 
     private void getData() {
-        NetWorkDataProviderFavorites dataProvider = new NetWorkDataProviderFavorites();
-        dataProvider.getFaceByLocation(this);
+        netWorkDataProviderFavorites.getFaceByLocation(this);
     }
 
     private void enableSwipe() {
