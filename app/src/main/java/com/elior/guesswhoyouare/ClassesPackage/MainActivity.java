@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.favorites) {
             Intent intentFavorite = new Intent(this, FavoritesFace.class);
             startActivity(intentFavorite);
