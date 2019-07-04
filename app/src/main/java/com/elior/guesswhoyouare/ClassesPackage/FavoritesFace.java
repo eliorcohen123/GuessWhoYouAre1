@@ -48,7 +48,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     private FaceViewModelFavorites mFaceViewModelFavorites;
     private RecyclerView recyclerView;
     private FaceListAdapterFavorites adapterFavorites;
-    private Paint p = new Paint();
+    private Paint p;
     private DrawerLayout drawer;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Toolbar toolbar;
@@ -75,6 +75,8 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         recyclerView = findViewById(R.id.face_list);
 
         netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
+
+        p = new Paint();
     }
 
     private void showUI() {
