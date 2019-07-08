@@ -22,19 +22,19 @@ public class FaceViewModelFavorites extends AndroidViewModel {
     }
 
     public void insert(FaceFavorites face) {
-        faceRepositoryFavorites.insert(face);
+        faceRepositoryFavorites.insertFace(face);
     }
 
     public void deleteAll() {
-        faceRepositoryFavorites.deleteLastSearch();
+        faceRepositoryFavorites.deleteAllFace();
     }
 
     public void deleteFace(FaceFavorites face) {
-        faceRepositoryFavorites.deleteWord(face);
+        faceRepositoryFavorites.deleteFace(face);
     }
 
     public void updateFace(FaceFavorites face) {
-        faceRepositoryFavorites.updateWord(face);
+        faceRepositoryFavorites.updateFace(face);
     }
 
 }

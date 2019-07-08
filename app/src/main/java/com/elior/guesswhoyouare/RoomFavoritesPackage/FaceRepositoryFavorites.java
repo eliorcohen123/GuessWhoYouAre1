@@ -25,7 +25,7 @@ public class FaceRepositoryFavorites {
 
         private FaceDaoFavorites faceDaoFavorites;
 
-        DeleteLastSearch(FaceDaoFavorites dao) {
+        private DeleteLastSearch(FaceDaoFavorites dao) {
             faceDaoFavorites = dao;
         }
 
@@ -36,16 +36,16 @@ public class FaceRepositoryFavorites {
         }
     }
 
-    void deleteLastSearch() {
+    void deleteAllFace() {
         DeleteLastSearch deleteLastSearch = new DeleteLastSearch(mFaceDaoFavorites);
         deleteLastSearch.execute();
     }
 
-    private static class updateWordAsyncTask extends AsyncTask<FaceFavorites, Void, Void> {
+    private static class updateFaceAsyncTask extends AsyncTask<FaceFavorites, Void, Void> {
 
         private FaceDaoFavorites faceDaoFavorites;
 
-        updateWordAsyncTask(FaceDaoFavorites dao) {
+        private updateFaceAsyncTask(FaceDaoFavorites dao) {
             faceDaoFavorites = dao;
         }
 
@@ -56,15 +56,15 @@ public class FaceRepositoryFavorites {
         }
     }
 
-    void updateWord(FaceFavorites face) {
-        new updateWordAsyncTask(mFaceDaoFavorites).execute(face);
+    void updateFace(FaceFavorites face) {
+        new updateFaceAsyncTask(mFaceDaoFavorites).execute(face);
     }
 
-    private static class deleteWordAsyncTask extends AsyncTask<FaceFavorites, Void, Void> {
+    private static class deleteFaceAsyncTask extends AsyncTask<FaceFavorites, Void, Void> {
 
         private FaceDaoFavorites faceDaoFavorites;
 
-        deleteWordAsyncTask(FaceDaoFavorites dao) {
+        private deleteFaceAsyncTask(FaceDaoFavorites dao) {
             faceDaoFavorites = dao;
         }
 
@@ -75,15 +75,15 @@ public class FaceRepositoryFavorites {
         }
     }
 
-    void deleteWord(FaceFavorites face) {
-        new deleteWordAsyncTask(mFaceDaoFavorites).execute(face);
+    void deleteFace(FaceFavorites face) {
+        new deleteFaceAsyncTask(mFaceDaoFavorites).execute(face);
     }
 
-    private static class insertAsyncTask extends AsyncTask<FaceFavorites, Void, Void> {
+    private static class insertFaceAsyncTask extends AsyncTask<FaceFavorites, Void, Void> {
 
         private FaceDaoFavorites faceDaoFavorites;
 
-        insertAsyncTask(FaceDaoFavorites dao) {
+        private insertFaceAsyncTask(FaceDaoFavorites dao) {
             faceDaoFavorites = dao;
         }
 
@@ -94,13 +94,13 @@ public class FaceRepositoryFavorites {
         }
     }
 
-    public void insert(FaceFavorites face) {
-        new insertAsyncTask(mFaceDaoFavorites).execute(face);
+    public void insertFace(FaceFavorites face) {
+        new insertFaceAsyncTask(mFaceDaoFavorites).execute(face);
     }
 
-    public void insert(List<FaceFavorites> faceList_) {
+    public void insertFace(List<FaceFavorites> faceList_) {
         for (FaceFavorites p : faceList_) {
-            insert(p);
+            insertFace(p);
         }
     }
 

@@ -43,7 +43,7 @@ public class NetWorkDataProviderFavorites {
 
                 }
             }
-            faceRepository.insert(listFace);
+            faceRepository.insertFace(listFace);
             return mIFaceDataReceived;
         }
 
