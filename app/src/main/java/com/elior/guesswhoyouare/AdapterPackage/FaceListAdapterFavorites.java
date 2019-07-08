@@ -54,8 +54,8 @@ public class FaceListAdapterFavorites extends RecyclerView.Adapter<FaceViewHolde
         }
     }
 
-    public void setWords(List<FaceFavorites> words) {
-        mFaceList = words;
+    public void setFaces(List<FaceFavorites> faceFavorites) {
+        mFaceList = faceFavorites;
         notifyDataSetChanged();
     }
 

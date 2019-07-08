@@ -219,9 +219,9 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         // pass data result to adapter
         mFaceViewModelFavorites.getAllFace().observe(this, new Observer<List<FaceFavorites>>() {
             @Override
-            public void onChanged(@Nullable final List<FaceFavorites> words) {
+            public void onChanged(@Nullable final List<FaceFavorites> faceFavorites) {
                 // Update the cached copy of the words in the adapter.
-                adapterFavorites.setWords(words);
+                adapterFavorites.setFaces(faceFavorites);
             }
         });
     }
