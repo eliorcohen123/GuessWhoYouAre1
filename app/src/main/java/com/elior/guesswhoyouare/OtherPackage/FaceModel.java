@@ -4,18 +4,10 @@ import java.io.Serializable;
 
 public class FaceModel implements Serializable {
 
-    private int age;
     private String gender;
     private String appearance;
+    private int age;
     private byte[] image;
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public String getGender() {
         return gender;
@@ -31,6 +23,14 @@ public class FaceModel implements Serializable {
 
     public void setAppearance(String appearance) {
         this.appearance = appearance;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public byte[] getImage() {
