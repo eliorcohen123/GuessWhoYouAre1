@@ -54,6 +54,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     private Toolbar toolbar;
     private NavigationView navigationView;
     private NetWorkDataProviderFavorites netWorkDataProviderFavorites;
+    private ItemDecoration itemDecoration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +136,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
             adapterFavorites = new FaceListAdapterFavorites(this);
             recyclerView.setAdapter(adapterFavorites);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            ItemDecoration itemDecoration = new ItemDecoration(20);
+            itemDecoration = new ItemDecoration(20);
             recyclerView.addItemDecoration(itemDecoration);
         } catch (Exception e) {
 
