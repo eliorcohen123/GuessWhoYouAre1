@@ -136,8 +136,10 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
             adapterFavorites = new FaceListAdapterFavorites(this);
             recyclerView.setAdapter(adapterFavorites);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            itemDecoration = new ItemDecoration(20);
-            recyclerView.addItemDecoration(itemDecoration);
+            if (itemDecoration == null) {
+                itemDecoration = new ItemDecoration(20);
+                recyclerView.addItemDecoration(itemDecoration);
+            }
         } catch (Exception e) {
 
         }
