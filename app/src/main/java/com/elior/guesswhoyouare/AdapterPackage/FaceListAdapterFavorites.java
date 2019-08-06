@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
@@ -48,6 +49,8 @@ public class FaceListAdapterFavorites extends RecyclerView.Adapter<FaceViewHolde
 
                 }
             });
+
+            setFadeAnimation(holder.itemView);
         } else {
             // Covers the case of data not being ready yet.
             holder.age1.setText("No FaceSearch");
@@ -70,6 +73,12 @@ public class FaceListAdapterFavorites extends RecyclerView.Adapter<FaceViewHolde
 
     public FaceFavorites getFaceAtPosition(int position) {
         return mFaceList.get(position);
+    }
+
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(1500);
+        view.startAnimation(anim);
     }
 
 }
