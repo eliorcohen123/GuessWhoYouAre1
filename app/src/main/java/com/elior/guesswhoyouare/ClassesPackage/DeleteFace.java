@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import com.elior.guesswhoyouare.R;
 
-public class DeleteFace extends AppCompatActivity {
+public class DeleteFace extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnOK;
 
@@ -17,21 +17,24 @@ public class DeleteFace extends AppCompatActivity {
         setContentView(R.layout.delete_face);
 
         initUI();
-        showUI();
+        initListeners();
     }
 
     private void initUI() {
         btnOK = findViewById(R.id.btnOK);
     }
 
-    private void showUI() {
-        // A button are passes from DeleteFace to Favorites
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    private void initListeners() {
+        btnOK.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnOK:
                 onBackPressed();
-            }
-        });
+                break;
+        }
     }
 
 }

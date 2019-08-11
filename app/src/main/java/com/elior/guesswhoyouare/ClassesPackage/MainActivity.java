@@ -48,7 +48,8 @@ import clarifai2.dto.input.ClarifaiInput;
 import clarifai2.dto.model.output.ClarifaiOutput;
 import clarifai2.dto.prediction.Region;
 
-public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback,
+        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private TextView myGender, myAge, myAppearance;
     private Button btnOpenExtCam, start, capture, stop, btnSave;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         setContentView(R.layout.activity_main);
 
         initUI();
+        initListeners();
         permissions();
         drawerLayout();
         camera();
@@ -97,6 +99,12 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         surfaceView = findViewById(R.id.surface_camera);
         // AppRater
         AppRater.app_launched(this);
+    }
+
+    private void initListeners() {
+        start.setOnClickListener(this);
+        capture.setOnClickListener(this);
+        stop.setOnClickListener(this);
     }
 
     private void permissions() {
@@ -158,26 +166,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     }
 
     private void camera() {
-        start.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-                start_camera();
-            }
-        });
-
-        stop.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-                stop_camera();
-            }
-        });
-
-        capture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                captureImage();
-            }
-        });
-
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -477,6 +465,22 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             } catch (Exception e) {
                 Toast.makeText(MainActivity.this, getString(R.string.fail_picture), Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnStart:
+                start_camera();
+                break;
+            case R.id.btnCapture:
+                // TODO Auto-generated method stub
+                captureImage();
+                break;
+            case R.id.btnStop:
+                stop_camera();
+                break;
         }
     }
 

@@ -18,7 +18,7 @@ import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 
 import java.io.ByteArrayOutputStream;
 
-public class AddFace extends AppCompatActivity {
+public class AddFace extends AppCompatActivity implements View.OnClickListener {
 
     private FaceViewModelFavorites faceViewModelFavorites;
     private TextView age, gender, appearance, textViewOK;
@@ -32,6 +32,7 @@ public class AddFace extends AppCompatActivity {
         setContentView(R.layout.add_face);
 
         initUI();
+        initListeners();
         showUI();
     }
 
@@ -49,6 +50,13 @@ public class AddFace extends AppCompatActivity {
         textViewOK = findViewById(R.id.textViewOK);
 
         btnBack = findViewById(R.id.btnBack);
+
+        faceViewModelFavorites = ViewModelProviders.of(AddFace.this).get(FaceViewModelFavorites.class);
+    }
+
+    private void initListeners() {
+        textViewOK.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
     }
 
     private void showUI() {
@@ -62,11 +70,12 @@ public class AddFace extends AppCompatActivity {
             gender.setText(R.string.woman);
         }
         appearance.setText(appearance3);
+    }
 
-        // Button that does the following:
-        textViewOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.textViewOK:
                 int age1 = Integer.parseInt(age.getText().toString());  // GetText of the name
                 String gender1 = gender.getText().toString();  // GetText of the address
                 String appearance1 = appearance.getText().toString();  // GetText of the lat
@@ -77,22 +86,16 @@ public class AddFace extends AppCompatActivity {
                 byte[] image1 = baos.toByteArray();
 
                 FaceFavorites faceFavorites = new FaceFavorites(age1, gender1, appearance1, image1);
-                faceViewModelFavorites = ViewModelProviders.of(AddFace.this).get(FaceViewModelFavorites.class);
                 faceViewModelFavorites.insert(faceFavorites);
 
                 // Pass from AddMapFromInternet to ActivityFavorites
                 Intent intentAddInternetToMain = new Intent(AddFace.this, FavoritesFace.class);
                 startActivity(intentAddInternetToMain);
-            }
-        });
-
-        // Button are back to the previous activity
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.btnBack:
                 onBackPressed();
-            }
-        });
+                break;
+        }
     }
 
 }

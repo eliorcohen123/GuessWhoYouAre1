@@ -11,7 +11,7 @@ import com.elior.guesswhoyouare.OtherPackage.NearByApplication;
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 
-public class DeleteAllDataFavorites extends AppCompatActivity {
+public class DeleteAllDataFavorites extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnOK, btnCancel;
     private FaceViewModelFavorites faceViewModelFavorites;
@@ -22,36 +22,36 @@ public class DeleteAllDataFavorites extends AppCompatActivity {
         setContentView(R.layout.delete_all_data_favorites);
 
         initUI();
-        showUI();
+        initListeners();
     }
 
     private void initUI() {
         btnOK = findViewById(R.id.btnOK);
         btnCancel = findViewById(R.id.btnCancel);
+
+        faceViewModelFavorites = new FaceViewModelFavorites(NearByApplication.getApplication());
     }
 
-    private void showUI() {
-        // Button are delete all the data of the Favorites
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                faceViewModelFavorites = new FaceViewModelFavorites(NearByApplication.getApplication());
+    private void initListeners() {
+        btnOK.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnOK:
                 faceViewModelFavorites.deleteAll();
 
                 Toast.makeText(DeleteAllDataFavorites.this, "All the data of favorites are deleted!", Toast.LENGTH_LONG).show();
 
                 Intent intentDeleteAllDataToMain = new Intent(DeleteAllDataFavorites.this, MainActivity.class);
                 startActivity(intentDeleteAllDataToMain);
-            }
-        });
-
-        // Button are back to the previous activity
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.btnCancel:
                 onBackPressed();
-            }
-        });
+                break;
+        }
     }
 
 }
