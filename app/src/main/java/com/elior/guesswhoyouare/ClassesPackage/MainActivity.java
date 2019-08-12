@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    private Region region;
+    private ByteArrayOutputStream blob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         permissions();
         drawerLayout();
         camera();
-        ext_camera();
     }
 
     // Initialize variables
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         start.setOnClickListener(this);
         capture.setOnClickListener(this);
         stop.setOnClickListener(this);
+        btnOpenExtCam.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
     }
 
     private void permissions() {
@@ -182,9 +185,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
         jpegCallback = new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
-
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                final ByteArrayOutputStream blob = new ByteArrayOutputStream();
+                blob = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
 
                 File file = new File(getCacheDir(), getString(R.string.child_file));
@@ -240,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                                     .executeSync();
 
                     try {
-                        final Region region = response.get().get(0).data().get(0);
+                        region = response.get().get(0).data().get(0);
 
                         // Get Gender
                         if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.masculine))) {
@@ -263,18 +265,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                         } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                             myImage.setRotation(180);
                         }
-
-                        btnSave.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent i = new Intent(MainActivity.this, AddFace.class);
-                                i.putExtra("byteArray", blob.toByteArray());
-                                i.putExtra("age", region.ageAppearances().get(0).name());
-                                i.putExtra("gender", region.genderAppearances().get(0).name());
-                                i.putExtra("appearance", region.multiculturalAppearances().get(0).name());
-                                startActivity(i);
-                            }
-                        });
                     } catch (Exception e) {
                         Toast.makeText(MainActivity.this, getString(R.string.fail_picture), Toast.LENGTH_LONG).show();
                     }
@@ -355,21 +345,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         // TODO Auto-generated method stub
     }
 
-    // Open external camera + option to ext_camera
-    private void ext_camera() {
-        btnOpenExtCam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-                } else {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                }
-            }
-        });
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -396,9 +371,9 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
             //Convert bitmap to byte array
             Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-            final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            Objects.requireNonNull(photo).compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
-            byte[] bitmapData = bos.toByteArray();
+            blob = new ByteArrayOutputStream();
+            Objects.requireNonNull(photo).compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
+            byte[] bitmapData = blob.toByteArray();
 
             //write the bytes in file
             FileOutputStream fos = null;
@@ -433,7 +408,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                             .executeSync();
 
             try {
-                final Region region = response.get().get(0).data().get(0);
+                region = response.get().get(0).data().get(0);
 
                 // Get Gender
                 if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.masculine))) {
@@ -450,18 +425,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
                 // Put Image
                 myImage.setImageBitmap(photo);
-
-                btnSave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(MainActivity.this, AddFace.class);
-                        i.putExtra("byteArray", bos.toByteArray());
-                        i.putExtra("age", region.ageAppearances().get(0).name());
-                        i.putExtra("gender", region.genderAppearances().get(0).name());
-                        i.putExtra("appearance", region.multiculturalAppearances().get(0).name());
-                        startActivity(i);
-                    }
-                });
             } catch (Exception e) {
                 Toast.makeText(MainActivity.this, getString(R.string.fail_picture), Toast.LENGTH_LONG).show();
             }
@@ -481,6 +444,25 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             case R.id.btnStop:
                 stop_camera();
                 break;
+            case R.id.btnGallery:
+                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                } else {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
+                break;
+            case R.id.btnSave:
+                try {
+                    Intent i = new Intent(MainActivity.this, AddFace.class);
+                    i.putExtra("byteArray", blob.toByteArray());
+                    i.putExtra("age", region.ageAppearances().get(0).name());
+                    i.putExtra("gender", region.genderAppearances().get(0).name());
+                    i.putExtra("appearance", region.multiculturalAppearances().get(0).name());
+                    startActivity(i);
+                } catch (Exception e) {
+
+                }
         }
     }
 
