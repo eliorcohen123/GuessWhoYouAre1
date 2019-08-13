@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private Toolbar toolbar;
     private NavigationView navigationView;
     private Region region;
-    private ByteArrayOutputStream blob;
     private byte[] bitmapData;
 
     @Override
@@ -185,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             public void onPictureTaken(byte[] data, Camera camera) {
                 // Convert bitmap to byte array
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                blob = new ByteArrayOutputStream();
+                ByteArrayOutputStream blob = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
                 bitmapData = blob.toByteArray();
 
@@ -336,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             // Convert bitmap to byte array
             Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-            blob = new ByteArrayOutputStream();
+            ByteArrayOutputStream blob = new ByteArrayOutputStream();
             Objects.requireNonNull(bitmap).compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
             bitmapData = blob.toByteArray();
 
