@@ -18,4 +18,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="default_notification_channel_id">1</string>
     <string name="picture_size">The image size is too large…</string>
+    <string name="data_empty">The data is empty…</string>
 </resources>

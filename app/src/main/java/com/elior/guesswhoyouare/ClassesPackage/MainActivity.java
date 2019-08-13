@@ -29,14 +29,11 @@ import android.widget.Toast;
 
 import com.elior.guesswhoyouare.R;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.List;
 import java.util.Objects;
 
@@ -429,12 +426,16 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 break;
             case R.id.btnSave:
                 try {
-                    Intent i = new Intent(MainActivity.this, AddFace.class);
-                    i.putExtra("byteArray", bitmapData);
-                    i.putExtra("age", region.ageAppearances().get(0).name());
-                    i.putExtra("gender", region.genderAppearances().get(0).name());
-                    i.putExtra("appearance", region.multiculturalAppearances().get(0).name());
-                    startActivity(i);
+                    if (region != null) {
+                        Intent i = new Intent(MainActivity.this, AddFace.class);
+                        i.putExtra("byteArray", bitmapData);
+                        i.putExtra("age", region.ageAppearances().get(0).name());
+                        i.putExtra("gender", region.genderAppearances().get(0).name());
+                        i.putExtra("appearance", region.multiculturalAppearances().get(0).name());
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(MainActivity.this, getString(R.string.data_empty), Toast.LENGTH_LONG).show();
+                    }
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.this, getString(R.string.picture_size), Toast.LENGTH_LONG).show();
                 }
