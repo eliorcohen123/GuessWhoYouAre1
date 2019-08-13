@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         start = findViewById(R.id.btnStart);
         capture = findViewById(R.id.btnCapture);
         stop = findViewById(R.id.btnStop);
-        btnOpenExtCam = findViewById(R.id.btnGallery);
+        btnOpenExtCam = findViewById(R.id.btnExternalCam);
         btnSave = findViewById(R.id.btnSave);
         // ImageView
         myImage = findViewById(R.id.myImage);
@@ -183,13 +183,13 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
         jpegCallback = new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
-                //Convert bitmap to byte array
+                // Convert bitmap to byte array
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 blob = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
                 bitmapData = blob.toByteArray();
 
-                //create a file to write bitmap data
+                // Create a file to write bitmap data
                 File file = new File(getCacheDir(), getString(R.string.child_file));
                 try {
                     file.createNewFile();
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                     e.printStackTrace();
                 }
 
-                //write the bytes in file
+                // Write the bytes in file
                 FileOutputStream fos = null;
                 try {
                     fos = new FileOutputStream(file);
@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         }
         Camera.Parameters param;
         param = camera.getParameters();
-        // modify parameter
+        // Modify parameter
         param.setPreviewFrameRate(20);
         param.setPreviewSize(176, 144);
         camera.setParameters(param);
@@ -334,13 +334,13 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            //Convert bitmap to byte array
+            // Convert bitmap to byte array
             Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
             blob = new ByteArrayOutputStream();
             Objects.requireNonNull(bitmap).compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
             bitmapData = blob.toByteArray();
 
-            //create a file to write bitmap data
+            // Create a file to write bitmap data
             File file = new File(getCacheDir(), getString(R.string.child_file));
             try {
                 file.createNewFile();
@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 e.printStackTrace();
             }
 
-            //write the bytes in file
+            // Write the bytes in file
             FileOutputStream fos = null;
             try {
                 fos = new FileOutputStream(file);
@@ -417,7 +417,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             case R.id.btnStop:
                 stop_camera();
                 break;
-            case R.id.btnGallery:
+            case R.id.btnExternalCam:
                 if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 } else {
@@ -440,6 +440,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.this, getString(R.string.picture_size), Toast.LENGTH_LONG).show();
                 }
+                break;
         }
     }
 

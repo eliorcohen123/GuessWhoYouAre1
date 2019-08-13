@@ -156,7 +156,7 @@
             android:textSize="17sp" />
 
         <Button
-            android:id="@+id/btnGallery"
+            android:id="@+id/btnExternalCam"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
