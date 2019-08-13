@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
         jpegCallback = new Camera.PictureCallback() {
             public void onPictureTaken(byte[] data, Camera camera) {
+                //Convert bitmap to byte array
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 blob = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
