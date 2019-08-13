@@ -361,24 +361,24 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            //Convert bitmap to byte array
+            Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+            blob = new ByteArrayOutputStream();
+            Objects.requireNonNull(bitmap).compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
+            byte[] bitmapData = blob.toByteArray();
+
             //create a file to write bitmap data
-            File f = new File(getCacheDir(), getString(R.string.child_file));
+            File file = new File(getCacheDir(), getString(R.string.child_file));
             try {
-                f.createNewFile();
+                file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            //Convert bitmap to byte array
-            Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-            blob = new ByteArrayOutputStream();
-            Objects.requireNonNull(photo).compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
-            byte[] bitmapData = blob.toByteArray();
-
             //write the bytes in file
             FileOutputStream fos = null;
             try {
-                fos = new FileOutputStream(f);
+                fos = new FileOutputStream(file);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -424,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 myAge.setText(region.ageAppearances().get(0).name());
 
                 // Put Image
-                myImage.setImageBitmap(photo);
+                myImage.setImageBitmap(bitmap);
             } catch (Exception e) {
                 Toast.makeText(MainActivity.this, getString(R.string.fail_picture), Toast.LENGTH_LONG).show();
             }
