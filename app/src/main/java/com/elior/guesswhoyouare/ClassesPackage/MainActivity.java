@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private NavigationView navigationView;
     private Region region;
     private ByteArrayOutputStream blob;
+    private byte[] bitmapData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,100 +189,74 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 blob = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
+                bitmapData = blob.toByteArray();
 
+                //create a file to write bitmap data
                 File file = new File(getCacheDir(), getString(R.string.child_file));
                 try {
                     file.createNewFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                // convert File to byte[]
-                final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                ObjectOutputStream oos = null;
+
+                //write the bytes in file
+                FileOutputStream fos = null;
                 try {
-                    oos = new ObjectOutputStream(bos);
+                    fos = new FileOutputStream(file);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    Objects.requireNonNull(fos).write(bitmapData);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 try {
-                    Objects.requireNonNull(oos).writeObject(file);
+                    Objects.requireNonNull(fos).flush();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 try {
-                    bos.close();
+                    Objects.requireNonNull(fos).close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                ClarifaiClient client = new ClarifaiBuilder(getString(R.string.API_KEY))
+                        .buildSync();
+
+                // Get response from Bitmap
+                ClarifaiResponse<List<ClarifaiOutput<Region>>> response =
+                        client.getDefaultModels().demographicsModel().predict()
+                                .withInputs(ClarifaiInput.forImage(ClarifaiImage.of(bitmapData)))
+                                .executeSync();
+
                 try {
-                    Objects.requireNonNull(oos).close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                data = bos.toByteArray();
+                    region = response.get().get(0).data().get(0);
 
-                // convert byte[] to File
-                ByteArrayInputStream bis = new ByteArrayInputStream(data);
-                ObjectInputStream ois = null;
-                try {
-                    ois = new ObjectInputStream(bis);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                File fileFromBytes;
-                try {
-                    fileFromBytes = (File) Objects.requireNonNull(ois).readObject();
-
-                    ClarifaiClient client = new ClarifaiBuilder(getString(R.string.API_KEY))
-                            .buildSync();
-
-                    // Get response from Bitmap
-                    ClarifaiResponse<List<ClarifaiOutput<Region>>> response =
-                            client.getDefaultModels().demographicsModel().predict()
-                                    .withInputs(ClarifaiInput.forImage(ClarifaiImage.of(fileFromBytes)))
-                                    .executeSync();
-
-                    try {
-                        region = response.get().get(0).data().get(0);
-
-                        // Get Gender
-                        if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.masculine))) {
-                            myGender.setText(getString(R.string.man));
-                        } else if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.feminine))) {
-                            myGender.setText(getString(R.string.woman));
-                        }
-
-                        // Get Age
-                        myAge.setText(region.ageAppearances().get(0).name());
-
-                        // Get Appearance
-                        myAppearance.setText(region.multiculturalAppearances().get(0).name());
-
-                        // Put Image
-                        myImage.setImageBitmap(bitmap);
-
-                        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                            myImage.setRotation(90);
-                        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                            myImage.setRotation(180);
-                        }
-                    } catch (Exception e) {
-                        Toast.makeText(MainActivity.this, getString(R.string.fail_picture), Toast.LENGTH_LONG).show();
+                    // Get Gender
+                    if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.masculine))) {
+                        myGender.setText(getString(R.string.man));
+                    } else if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.feminine))) {
+                        myGender.setText(getString(R.string.woman));
                     }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    bis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    Objects.requireNonNull(ois).close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                    // Get Appearance
+                    myAppearance.setText(region.multiculturalAppearances().get(0).name());
+
+                    // Get Age
+                    myAge.setText(region.ageAppearances().get(0).name());
+
+                    // Put Image
+                    myImage.setImageBitmap(bitmap);
+
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                        myImage.setRotation(90);
+                    } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        myImage.setRotation(180);
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, getString(R.string.fail_picture), Toast.LENGTH_LONG).show();
                 }
             }
         };
@@ -365,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
             blob = new ByteArrayOutputStream();
             Objects.requireNonNull(bitmap).compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
-            byte[] bitmapData = blob.toByteArray();
+            bitmapData = blob.toByteArray();
 
             //create a file to write bitmap data
             File file = new File(getCacheDir(), getString(R.string.child_file));
@@ -455,13 +430,13 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             case R.id.btnSave:
                 try {
                     Intent i = new Intent(MainActivity.this, AddFace.class);
-                    i.putExtra("byteArray", blob.toByteArray());
+                    i.putExtra("byteArray", bitmapData);
                     i.putExtra("age", region.ageAppearances().get(0).name());
                     i.putExtra("gender", region.genderAppearances().get(0).name());
                     i.putExtra("appearance", region.multiculturalAppearances().get(0).name());
                     startActivity(i);
                 } catch (Exception e) {
-
+                    Toast.makeText(MainActivity.this, getString(R.string.picture_size), Toast.LENGTH_LONG).show();
                 }
         }
     }
