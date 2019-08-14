@@ -185,7 +185,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 // Convert bitmap to byte array
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 ByteArrayOutputStream blob = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
+                Bitmap convertedImage = getResizedBitmap(bitmap);
+                convertedImage.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
                 bitmapData = blob.toByteArray();
 
                 // Create a file to write bitmap data
@@ -257,6 +258,22 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                 }
             }
         };
+    }
+
+    private Bitmap getResizedBitmap(Bitmap image) {
+
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = 500;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = 500;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
     // Take picture from the internal camera

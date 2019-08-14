@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public interface IFaceDataReceived {
 
-    void onFaceDataReceived(ArrayList<FaceModel> results_);
+    void onFaceDataReceived();
 }

@@ -76,6 +76,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         recyclerView = findViewById(R.id.face_list);
 
         netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
+        adapterFavorites = new FaceListAdapterFavorites(this);
 
         p = new Paint();
     }
@@ -133,7 +134,6 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
 
     private void myRecyclerView() {
         try {
-            adapterFavorites = new FaceListAdapterFavorites(this);
             recyclerView.setAdapter(adapterFavorites);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             if (itemDecoration == null) {
@@ -218,7 +218,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     }
 
     @Override
-    public void onFaceDataReceived(ArrayList<FaceModel> results_) {
+    public void onFaceDataReceived() {
         // pass data result to adapter
         mFaceViewModelFavorites.getAllFace().observe(this, new Observer<List<FaceFavorites>>() {
             @Override

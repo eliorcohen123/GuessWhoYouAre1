@@ -50,9 +50,9 @@ public class NetWorkDataProviderFavorites {
         @Override
         protected void onPostExecute(IFaceDataReceived iFaceDataReceived_) {
             try {
-                iFaceDataReceived_.onFaceDataReceived(mFaceModels);
+                iFaceDataReceived_.onFaceDataReceived();
             } catch (Exception e) {
-                iFaceDataReceived_.onFaceDataReceived(mFaceModels);
+                iFaceDataReceived_.onFaceDataReceived();
             }
         }
     }
