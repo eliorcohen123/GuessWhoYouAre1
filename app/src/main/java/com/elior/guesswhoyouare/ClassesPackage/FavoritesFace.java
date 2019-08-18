@@ -32,15 +32,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elior.guesswhoyouare.AdapterPackage.FaceListAdapterFavorites;
-import com.elior.guesswhoyouare.OtherPackage.FaceModel;
 import com.elior.guesswhoyouare.OtherPackage.ItemDecoration;
-import com.elior.guesswhoyouare.OtherPackage.NetWorkDataProviderFavorites;
+import com.elior.guesswhoyouare.OtherPackage.DataProviderFavorites;
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.IFaceDataReceived;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritesFace extends AppCompatActivity implements IFaceDataReceived, NavigationView.OnNavigationItemSelectedListener {
@@ -53,7 +51,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     private SwipeRefreshLayout swipeRefreshLayout;
     private Toolbar toolbar;
     private NavigationView navigationView;
-    private NetWorkDataProviderFavorites netWorkDataProviderFavorites;
+    private DataProviderFavorites dataProviderFavorites;
     private ItemDecoration itemDecoration;
 
     @Override
@@ -75,7 +73,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
         recyclerView = findViewById(R.id.face_list);
 
-        netWorkDataProviderFavorites = new NetWorkDataProviderFavorites();
+        dataProviderFavorites = new DataProviderFavorites();
         adapterFavorites = new FaceListAdapterFavorites(this);
 
         p = new Paint();
@@ -148,7 +146,7 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     }
 
     private void getData() {
-        netWorkDataProviderFavorites.getFaceByLocation(this);
+        dataProviderFavorites.getFace(this);
     }
 
     private void enableSwipe() {

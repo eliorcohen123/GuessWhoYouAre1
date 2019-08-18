@@ -8,25 +8,25 @@ import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceRepositoryFavorites;
 
 import java.util.ArrayList;
 
-public class NetWorkDataProviderFavorites {
+public class DataProviderFavorites {
 
-    public void getFaceByLocation(IFaceDataReceived resultListener_) {
+    public void getFace(IFaceDataReceived resultListener_) {
 
         //go get data from google API
         // take time....
         //more time...
         //Data received -> resultListener_
 
-        GetFaceByLocationAsyncTask getFaceByLocationAsyncTask = new GetFaceByLocationAsyncTask(resultListener_);
-        getFaceByLocationAsyncTask.execute();
+        GetFaceAsyncTask getFaceAsyncTask = new GetFaceAsyncTask(resultListener_);
+        getFaceAsyncTask.execute();
     }
 
-    private class GetFaceByLocationAsyncTask extends AsyncTask<String, Integer, IFaceDataReceived> {
+    private class GetFaceAsyncTask extends AsyncTask<String, Integer, IFaceDataReceived> {
 
         private ArrayList<FaceModel> mFaceModels;
         private IFaceDataReceived mIFaceDataReceived;
 
-        public GetFaceByLocationAsyncTask(IFaceDataReceived iFaceDataReceived) {
+        public GetFaceAsyncTask(IFaceDataReceived iFaceDataReceived) {
             mIFaceDataReceived = iFaceDataReceived;
         }
 
