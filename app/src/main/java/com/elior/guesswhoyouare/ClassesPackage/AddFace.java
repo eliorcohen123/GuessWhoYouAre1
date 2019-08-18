@@ -88,7 +88,7 @@ public class AddFace extends AppCompatActivity implements View.OnClickListener {
                 FaceFavorites faceFavorites = new FaceFavorites(age1, gender1, appearance1, image1);
                 faceViewModelFavorites.insert(faceFavorites);
 
-                // Pass from AddMapFromInternet to ActivityFavorites
+                // Pass from AddFace to ActivityFavorites
                 Intent intentAddInternetToMain = new Intent(AddFace.this, FavoritesFace.class);
                 startActivity(intentAddInternetToMain);
                 break;
