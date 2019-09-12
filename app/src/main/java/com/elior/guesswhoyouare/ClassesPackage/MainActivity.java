@@ -138,16 +138,12 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     private void drawerLayout() {
         (this).setSupportActionBar(toolbar);
 
-        findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // open right drawer
-
-                if (drawer.isDrawerOpen(GravityCompat.END)) {
-                    drawer.closeDrawer(GravityCompat.END);
-                } else
-                    drawer.openDrawer(GravityCompat.END);
-            }
+        findViewById(R.id.myButton).setOnClickListener(v -> {
+            // open right drawer
+            if (drawer.isDrawerOpen(GravityCompat.END)) {
+                drawer.closeDrawer(GravityCompat.END);
+            } else
+                drawer.openDrawer(GravityCompat.END);
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -194,9 +190,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         };
 
         // Handles data for jpeg picture
-        shutterCallback = new Camera.ShutterCallback() {
-            public void onShutter() {
-            }
+        shutterCallback = () -> {
         };
 
         jpegCallback = new Camera.PictureCallback() {

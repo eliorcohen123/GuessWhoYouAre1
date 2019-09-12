@@ -43,12 +43,6 @@ public class FaceListAdapterFavorites extends RecyclerView.Adapter<FaceViewHolde
             } catch (Exception e) {
 
             }
-            holder.linearLayout1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
 
             setFadeAnimation(holder.itemView);
         } else {

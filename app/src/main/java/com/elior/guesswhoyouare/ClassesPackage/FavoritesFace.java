@@ -82,16 +82,13 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     private void showUI() {
         (this).setSupportActionBar(toolbar);
 
-        findViewById(R.id.myButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // open right drawer
+        findViewById(R.id.myButton).setOnClickListener(v -> {
+            // open right drawer
 
-                if (drawer.isDrawerOpen(GravityCompat.END)) {
-                    drawer.closeDrawer(GravityCompat.END);
-                } else
-                    drawer.openDrawer(GravityCompat.END);
-            }
+            if (drawer.isDrawerOpen(GravityCompat.END)) {
+                drawer.closeDrawer(GravityCompat.END);
+            } else
+                drawer.openDrawer(GravityCompat.END);
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -104,29 +101,26 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         navigationView.setNavigationItemSelectedListener(this);
 
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorOrange));
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Vibration for 0.1 second
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    vibrator.vibrate(100);
-                }
-
-                finish();
-                startActivity(getIntent());  // Refresh activity
-
-                Toast toast = Toast.makeText(FavoritesFace.this, "The list are refreshed!", Toast.LENGTH_SHORT);
-                View view = toast.getView();
-                view.getBackground().setColorFilter(getResources().getColor(R.color.colorLightBlue), PorterDuff.Mode.SRC_IN);
-                TextView text = view.findViewById(android.R.id.message);
-                text.setTextColor(getResources().getColor(R.color.colorDarkBrown));
-                toast.show();  // Toast
-
-                swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            // Vibration for 0.1 second
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                vibrator.vibrate(100);
             }
+
+            finish();
+            startActivity(getIntent());  // Refresh activity
+
+            Toast toast = Toast.makeText(FavoritesFace.this, "The list are refreshed!", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.getBackground().setColorFilter(getResources().getColor(R.color.colorLightBlue), PorterDuff.Mode.SRC_IN);
+            TextView text = view.findViewById(android.R.id.message);
+            text.setTextColor(getResources().getColor(R.color.colorDarkBrown));
+            toast.show();  // Toast
+
+            swipeRefreshLayout.setRefreshing(false);
         });
     }
 
@@ -218,12 +212,9 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
     @Override
     public void onFaceDataReceived() {
         // pass data result to adapter
-        mFaceViewModelFavorites.getAllFace().observe(this, new Observer<List<FaceFavorites>>() {
-            @Override
-            public void onChanged(@Nullable final List<FaceFavorites> faceFavorites) {
-                // Update the cached copy of the words in the adapter.
-                adapterFavorites.setFaces(faceFavorites);
-            }
+        mFaceViewModelFavorites.getAllFace().observe(this, faceFavorites -> {
+            // Update the cached copy of the words in the adapter.
+            adapterFavorites.setFaces(faceFavorites);
         });
     }
 
