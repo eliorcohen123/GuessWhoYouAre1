@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -44,6 +45,7 @@ import clarifai2.dto.input.ClarifaiImage;
 import clarifai2.dto.input.ClarifaiInput;
 import clarifai2.dto.model.output.ClarifaiOutput;
 import clarifai2.dto.prediction.Region;
+import guy4444.smartrate.SmartRate;
 
 public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback,
         NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
         initUI();
         initListeners();
+        initAppRater();
         permissions();
         drawerLayout();
         camera();
@@ -95,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         myImage = findViewById(R.id.myImage);
         // SurfaceView
         surfaceView = findViewById(R.id.surface_camera);
-        // AppRater
-        AppRater.app_launched(this);
     }
 
     private void initListeners() {
@@ -105,6 +106,24 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         stop.setOnClickListener(this);
         btnOpenExtCam.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+    }
+
+    private void initAppRater() {
+        SmartRate.Rate(MainActivity.this
+                , "Rate Us"
+                , "Tell others what you think about this app"
+                , "Continue"
+                , "Please take a moment and rate us on Google Play"
+                , "click here"
+                , "Ask me later"
+                , "Never ask again"
+                , "Cancel"
+                , "Thanks for the feedback"
+                , Color.parseColor("#2196F3")
+                , 5
+                , 1
+                , 1
+        );
     }
 
     private void permissions() {
