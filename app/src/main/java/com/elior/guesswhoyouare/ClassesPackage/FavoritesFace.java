@@ -1,6 +1,5 @@
 package com.elior.guesswhoyouare.ClassesPackage;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,14 +30,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elior.guesswhoyouare.AdapterPackage.FaceListAdapterFavorites;
-import com.elior.guesswhoyouare.OtherPackage.ItemDecoration;
 import com.elior.guesswhoyouare.OtherPackage.DataProviderFavorites;
+import com.elior.guesswhoyouare.OtherPackage.ItemDecoration;
 import com.elior.guesswhoyouare.R;
-import com.elior.guesswhoyouare.RoomFavoritesPackage.IFaceDataReceived;
-import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
-
-import java.util.List;
+import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
+import com.elior.guesswhoyouare.RoomFavoritesPackage.IFaceDataReceived;
 
 public class FavoritesFace extends AppCompatActivity implements IFaceDataReceived, NavigationView.OnNavigationItemSelectedListener {
 
