@@ -184,91 +184,87 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        rawCallback = new Camera.PictureCallback() {
-            public void onPictureTaken(byte[] data, Camera camera) {
-            }
+        rawCallback = (data, camera) -> {
         };
 
         // Handles data for jpeg picture
         shutterCallback = () -> {
         };
 
-        jpegCallback = new Camera.PictureCallback() {
-            public void onPictureTaken(byte[] data, Camera camera) {
-                // Convert bitmap to byte array
-                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                ByteArrayOutputStream blob = new ByteArrayOutputStream();
-                Bitmap convertedImage = getResizedBitmap(bitmap);
-                convertedImage.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
-                bitmapData = blob.toByteArray();
+        jpegCallback = (data, camera) -> {
+            // Convert bitmap to byte array
+            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            ByteArrayOutputStream blob = new ByteArrayOutputStream();
+            Bitmap convertedImage = getResizedBitmap(bitmap);
+            convertedImage.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
+            bitmapData = blob.toByteArray();
 
-                // Create a file to write bitmap data
-                File file = new File(getCacheDir(), getString(R.string.child_file));
-                try {
-                    file.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            // Create a file to write bitmap data
+            File file = new File(getCacheDir(), getString(R.string.child_file));
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Write the bytes in file
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                Objects.requireNonNull(fos).write(bitmapData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                Objects.requireNonNull(fos).flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                Objects.requireNonNull(fos).close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            ClarifaiClient client = new ClarifaiBuilder(getString(R.string.API_KEY))
+                    .buildSync();
+
+            // Get response from Bitmap
+            ClarifaiResponse<List<ClarifaiOutput<Region>>> response =
+                    client.getDefaultModels().demographicsModel().predict()
+                            .withInputs(ClarifaiInput.forImage(ClarifaiImage.of(bitmapData)))
+                            .executeSync();
+
+            try {
+                region = response.get().get(0).data().get(0);
+
+                // Get Gender
+                if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.masculine))) {
+                    myGender.setText(getString(R.string.man));
+                } else if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.feminine))) {
+                    myGender.setText(getString(R.string.woman));
                 }
 
-                // Write the bytes in file
-                FileOutputStream fos = null;
-                try {
-                    fos = new FileOutputStream(file);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                // Get Appearance
+                myAppearance.setText(region.multiculturalAppearances().get(0).name());
+
+                // Get Age
+                myAge.setText(region.ageAppearances().get(0).name());
+
+                // Put Image
+                myImage.setImageBitmap(bitmap);
+
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    myImage.setRotation(90);
+                } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    myImage.setRotation(180);
                 }
-                try {
-                    Objects.requireNonNull(fos).write(bitmapData);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    Objects.requireNonNull(fos).flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    Objects.requireNonNull(fos).close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                ClarifaiClient client = new ClarifaiBuilder(getString(R.string.API_KEY))
-                        .buildSync();
-
-                // Get response from Bitmap
-                ClarifaiResponse<List<ClarifaiOutput<Region>>> response =
-                        client.getDefaultModels().demographicsModel().predict()
-                                .withInputs(ClarifaiInput.forImage(ClarifaiImage.of(bitmapData)))
-                                .executeSync();
-
-                try {
-                    region = response.get().get(0).data().get(0);
-
-                    // Get Gender
-                    if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.masculine))) {
-                        myGender.setText(getString(R.string.man));
-                    } else if (Objects.requireNonNull(region.genderAppearances().get(0).name()).equals(getString(R.string.feminine))) {
-                        myGender.setText(getString(R.string.woman));
-                    }
-
-                    // Get Appearance
-                    myAppearance.setText(region.multiculturalAppearances().get(0).name());
-
-                    // Get Age
-                    myAge.setText(region.ageAppearances().get(0).name());
-
-                    // Put Image
-                    myImage.setImageBitmap(bitmap);
-
-                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                        myImage.setRotation(90);
-                    } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        myImage.setRotation(180);
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, getString(R.string.fail_picture), Toast.LENGTH_LONG).show();
-                }
+            } catch (Exception e) {
+                Toast.makeText(MainActivity.this, getString(R.string.fail_picture), Toast.LENGTH_LONG).show();
             }
         };
     }

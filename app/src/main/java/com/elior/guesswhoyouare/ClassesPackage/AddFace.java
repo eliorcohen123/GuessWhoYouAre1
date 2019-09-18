@@ -38,6 +38,7 @@ public class AddFace extends AppCompatActivity implements View.OnClickListener {
 
     private void initUI() {
         Bundle extras = getIntent().getExtras();
+        assert extras != null;
         age3 = extras.getString("age");
         gender3 = extras.getString("gender");
         appearance3 = extras.getString("appearance");
