@@ -3,8 +3,8 @@ package com.elior.guesswhoyouare.OtherPackage;
 import android.os.AsyncTask;
 
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
+import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.IFaceDataReceived;
-import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceRepositoryFavorites;
 
 import java.util.ArrayList;
 
@@ -25,6 +25,7 @@ public class DataProviderFavorites {
 
         private ArrayList<FaceModel> mFaceModels;
         private IFaceDataReceived mIFaceDataReceived;
+        private FaceViewModelFavorites faceViewModelFavorites;
 
         public GetFaceAsyncTask(IFaceDataReceived iFaceDataReceived) {
             mIFaceDataReceived = iFaceDataReceived;
@@ -33,7 +34,7 @@ public class DataProviderFavorites {
         @Override
         protected IFaceDataReceived doInBackground(String... urls) {
             mFaceModels = new ArrayList<FaceModel>();
-            FaceRepositoryFavorites faceRepository = new FaceRepositoryFavorites(NearByApplication.getApplication());
+            faceViewModelFavorites = new FaceViewModelFavorites(NearByApplication.getApplication());
             ArrayList<FaceFavorites> listFace = new ArrayList<>();
             for (FaceModel faceModel : mFaceModels) {
                 try {
@@ -43,7 +44,7 @@ public class DataProviderFavorites {
 
                 }
             }
-            faceRepository.insertFace(listFace);
+            faceViewModelFavorites.insert(listFace);
             return mIFaceDataReceived;
         }
 

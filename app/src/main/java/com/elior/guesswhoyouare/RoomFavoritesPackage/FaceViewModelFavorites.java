@@ -21,6 +21,10 @@ public class FaceViewModelFavorites extends AndroidViewModel {
         return mAllFaceFavorites;
     }
 
+    public void insert(List<FaceFavorites> face) {
+        faceRepositoryFavorites.insertFace(face);
+    }
+
     public void insert(FaceFavorites face) {
         faceRepositoryFavorites.insertFace(face);
     }
