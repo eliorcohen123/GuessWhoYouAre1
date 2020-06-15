@@ -31,8 +31,8 @@ public class DataProviderFavorites {
 
         @Override
         protected ArrayList<FaceModel> doInBackground(String... urls) {
-            mFaceModels = new ArrayList<FaceModel>();
             faceViewModelFavorites = new FaceViewModelFavorites(NearByApplication.getApplication());
+            mFaceModels = new ArrayList<FaceModel>();
             ArrayList<FaceFavorites> listFace = new ArrayList<>();
             for (FaceModel faceModel : mFaceModels) {
                 try {
