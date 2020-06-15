@@ -4,35 +4,33 @@ import android.os.AsyncTask;
 
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
-import com.elior.guesswhoyouare.RoomFavoritesPackage.IFaceDataReceived;
 
 import java.util.ArrayList;
 
 public class DataProviderFavorites {
 
-    public void getFace(IFaceDataReceived resultListener_) {
+    public void getFace() {
 
         //go get data from google API
         // take time....
         //more time...
         //Data received -> resultListener_
 
-        GetFaceAsyncTask getFaceAsyncTask = new GetFaceAsyncTask(resultListener_);
+        GetFaceAsyncTask getFaceAsyncTask = new GetFaceAsyncTask();
         getFaceAsyncTask.execute();
     }
 
-    private class GetFaceAsyncTask extends AsyncTask<String, Integer, IFaceDataReceived> {
+    private static class GetFaceAsyncTask extends AsyncTask<String, Integer, ArrayList<FaceModel>> {
 
         private ArrayList<FaceModel> mFaceModels;
-        private IFaceDataReceived mIFaceDataReceived;
         private FaceViewModelFavorites faceViewModelFavorites;
 
-        public GetFaceAsyncTask(IFaceDataReceived iFaceDataReceived) {
-            mIFaceDataReceived = iFaceDataReceived;
+        public GetFaceAsyncTask() {
+
         }
 
         @Override
-        protected IFaceDataReceived doInBackground(String... urls) {
+        protected ArrayList<FaceModel> doInBackground(String... urls) {
             mFaceModels = new ArrayList<FaceModel>();
             faceViewModelFavorites = new FaceViewModelFavorites(NearByApplication.getApplication());
             ArrayList<FaceFavorites> listFace = new ArrayList<>();
@@ -45,16 +43,12 @@ public class DataProviderFavorites {
                 }
             }
             faceViewModelFavorites.insert(listFace);
-            return mIFaceDataReceived;
+            return mFaceModels;
         }
 
         @Override
-        protected void onPostExecute(IFaceDataReceived iFaceDataReceived_) {
-            try {
-                iFaceDataReceived_.onFaceDataReceived();
-            } catch (Exception e) {
-                iFaceDataReceived_.onFaceDataReceived();
-            }
+        protected void onPostExecute(ArrayList<FaceModel> arrayList) {
+
         }
     }
 

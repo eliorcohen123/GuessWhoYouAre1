@@ -1,6 +1,6 @@
 package com.elior.guesswhoyouare.ClassesPackage;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,16 +14,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -35,9 +35,8 @@ import com.elior.guesswhoyouare.OtherPackage.ItemDecoration;
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
-import com.elior.guesswhoyouare.RoomFavoritesPackage.IFaceDataReceived;
 
-public class FavoritesFace extends AppCompatActivity implements IFaceDataReceived, NavigationView.OnNavigationItemSelectedListener {
+public class FavoritesFace extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FaceViewModelFavorites mFaceViewModelFavorites;
     private RecyclerView recyclerView;
@@ -133,10 +132,15 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         }
 
         mFaceViewModelFavorites = ViewModelProviders.of(this).get(FaceViewModelFavorites.class);
+
+        mFaceViewModelFavorites.getAllFace().observe(this, faceFavorites -> {
+            // Update the cached copy of the words in the adapter.
+            adapterFavorites.setFaces(faceFavorites);
+        });
     }
 
     private void getData() {
-        dataProviderFavorites.getFace(this);
+        dataProviderFavorites.getFace();
     }
 
     private void enableSwipe() {
@@ -203,15 +207,6 @@ public class FavoritesFace extends AppCompatActivity implements IFaceDataReceive
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.END);
         return true;
-    }
-
-    @Override
-    public void onFaceDataReceived() {
-        // pass data result to adapter
-        mFaceViewModelFavorites.getAllFace().observe(this, faceFavorites -> {
-            // Update the cached copy of the words in the adapter.
-            adapterFavorites.setFaces(faceFavorites);
-        });
     }
 
 }
