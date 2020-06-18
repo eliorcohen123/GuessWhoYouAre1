@@ -1,6 +1,7 @@
 package com.elior.guesswhoyouare.ClassesPackage;
 
 import androidx.lifecycle.ViewModelProviders;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +15,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -24,13 +27,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elior.guesswhoyouare.AdapterPackage.FaceListAdapterFavorites;
-import com.elior.guesswhoyouare.OtherPackage.DataProviderFavorites;
 import com.elior.guesswhoyouare.OtherPackage.ItemDecoration;
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
@@ -46,7 +49,6 @@ public class FavoritesFace extends AppCompatActivity implements NavigationView.O
     private SwipeRefreshLayout swipeRefreshLayout;
     private Toolbar toolbar;
     private NavigationView navigationView;
-    private DataProviderFavorites dataProviderFavorites;
     private ItemDecoration itemDecoration;
 
     @Override
@@ -57,7 +59,6 @@ public class FavoritesFace extends AppCompatActivity implements NavigationView.O
         initUI();
         showUI();
         myRecyclerView();
-        getData();
         enableSwipe();
     }
 
@@ -68,7 +69,6 @@ public class FavoritesFace extends AppCompatActivity implements NavigationView.O
         swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
         recyclerView = findViewById(R.id.face_list);
 
-        dataProviderFavorites = new DataProviderFavorites();
         adapterFavorites = new FaceListAdapterFavorites(this);
 
         p = new Paint();
@@ -121,26 +121,19 @@ public class FavoritesFace extends AppCompatActivity implements NavigationView.O
 
     private void myRecyclerView() {
         try {
-            recyclerView.setAdapter(adapterFavorites);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             if (itemDecoration == null) {
                 itemDecoration = new ItemDecoration(20);
                 recyclerView.addItemDecoration(itemDecoration);
             }
+            recyclerView.setAdapter(adapterFavorites);
         } catch (Exception e) {
 
         }
 
         mFaceViewModelFavorites = ViewModelProviders.of(this).get(FaceViewModelFavorites.class);
 
-        mFaceViewModelFavorites.getAllFace().observe(this, faceFavorites -> {
-            // Update the cached copy of the words in the adapter.
-            adapterFavorites.setFaces(faceFavorites);
-        });
-    }
-
-    private void getData() {
-        dataProviderFavorites.getFace();
+        mFaceViewModelFavorites.getAllFace().observe(this, faceFavorites -> adapterFavorites.setFaces(faceFavorites));
     }
 
     private void enableSwipe() {
