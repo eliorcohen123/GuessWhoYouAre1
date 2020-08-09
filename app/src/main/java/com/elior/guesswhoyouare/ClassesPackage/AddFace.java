@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -15,8 +14,6 @@ import android.widget.TextView;
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
-
-import java.io.ByteArrayOutputStream;
 
 public class AddFace extends AppCompatActivity implements View.OnClickListener {
 
@@ -81,12 +78,7 @@ public class AddFace extends AppCompatActivity implements View.OnClickListener {
                 String gender1 = gender.getText().toString();  // GetText of the address
                 String appearance1 = appearance.getText().toString();  // GetText of the lat
 
-                Bitmap bitmap = ((BitmapDrawable) imageView1.getDrawable()).getBitmap();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] image1 = baos.toByteArray();
-
-                FaceFavorites faceFavorites = new FaceFavorites(age1, gender1, appearance1, image1);
+                FaceFavorites faceFavorites = new FaceFavorites(age1, gender1, appearance1, getIntent().getByteArrayExtra("byteArray"));
                 faceViewModelFavorites.insert(faceFavorites);
 
                 // Pass from AddFace to ActivityFavorites
