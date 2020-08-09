@@ -35,7 +35,7 @@ public class FaceFavorites implements Serializable {
     private String appearance;
 
     @NonNull
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    @ColumnInfo(name = "image", typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
 
 
