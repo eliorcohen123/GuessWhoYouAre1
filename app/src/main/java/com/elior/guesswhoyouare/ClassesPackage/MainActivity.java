@@ -10,15 +10,21 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.StrictMode;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -194,41 +200,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         jpegCallback = (data, camera) -> {
             // Convert bitmap to byte array
             Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-            ByteArrayOutputStream blob = new ByteArrayOutputStream();
             Bitmap convertedImage = getResizedBitmap(bitmap);
-            convertedImage.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
-            bitmapData = blob.toByteArray();
-
-            // Create a file to write bitmap data
-            File file = new File(getCacheDir(), getString(R.string.child_file));
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Write the bytes in file
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            try {
-                Objects.requireNonNull(fos).write(bitmapData);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                Objects.requireNonNull(fos).flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                Objects.requireNonNull(fos).close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            getBitmap(convertedImage);
 
             ClarifaiClient client = new ClarifaiBuilder(getString(R.string.API_KEY))
                     .buildSync();
@@ -270,7 +243,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     }
 
     private Bitmap getResizedBitmap(Bitmap image) {
-
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -282,6 +254,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             height = 500;
             width = (int) (height * bitmapRatio);
         }
+
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
@@ -362,40 +335,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             // Convert bitmap to byte array
             Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-            ByteArrayOutputStream blob = new ByteArrayOutputStream();
-            Objects.requireNonNull(bitmap).compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, blob);
-            bitmapData = blob.toByteArray();
-
-            // Create a file to write bitmap data
-            File file = new File(getCacheDir(), getString(R.string.child_file));
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Write the bytes in file
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            try {
-                Objects.requireNonNull(fos).write(bitmapData);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                Objects.requireNonNull(fos).flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                Objects.requireNonNull(fos).close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            getBitmap(bitmap);
 
             ClarifaiClient client = new ClarifaiBuilder(getString(R.string.API_KEY))
                     .buildSync();
@@ -427,6 +367,43 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             } catch (Exception e) {
                 Toast.makeText(MainActivity.this, getString(R.string.fail_picture), Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private void getBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream blob = new ByteArrayOutputStream();
+        Objects.requireNonNull(bitmap).compress(Bitmap.CompressFormat.JPEG, 0, blob);
+        bitmapData = blob.toByteArray();
+
+        // Create a file to write bitmap data
+        File file = new File(getCacheDir(), getString(R.string.child_file));
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Write the bytes in file
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            Objects.requireNonNull(fos).write(bitmapData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            Objects.requireNonNull(fos).flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            Objects.requireNonNull(fos).close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
