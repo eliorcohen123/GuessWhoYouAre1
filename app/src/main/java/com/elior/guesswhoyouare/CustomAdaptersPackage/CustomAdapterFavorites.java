@@ -1,4 +1,4 @@
-package com.elior.guesswhoyouare.AdapterPackage;
+package com.elior.guesswhoyouare.CustomAdaptersPackage;
 
 import android.content.Context;
 import android.graphics.Bitmap;

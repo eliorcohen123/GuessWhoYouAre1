@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.elior.guesswhoyouare.OtherPackage.NearByApplication;
+import com.elior.guesswhoyouare.OthersPackage.NearByApplication;
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 
-public class DeleteAllDataFavorites extends AppCompatActivity implements View.OnClickListener {
+public class DeleteAllDataFavoritesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnOK, btnCancel;
     private FaceViewModelFavorites faceViewModelFavorites;
@@ -43,9 +43,9 @@ public class DeleteAllDataFavorites extends AppCompatActivity implements View.On
             case R.id.btnOK:
                 faceViewModelFavorites.deleteAll();
 
-                Toast.makeText(DeleteAllDataFavorites.this, "All the data of favorites are deleted!", Toast.LENGTH_LONG).show();
+                Toast.makeText(DeleteAllDataFavoritesActivity.this, "All the data of favorites are deleted!", Toast.LENGTH_LONG).show();
 
-                Intent intentDeleteAllDataToMain = new Intent(DeleteAllDataFavorites.this, MainActivity.class);
+                Intent intentDeleteAllDataToMain = new Intent(DeleteAllDataFavoritesActivity.this, MainActivity.class);
                 startActivity(intentDeleteAllDataToMain);
                 break;
             case R.id.btnCancel:

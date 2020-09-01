@@ -33,13 +33,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elior.guesswhoyouare.AdapterPackage.CustomAdapterFavorites;
-import com.elior.guesswhoyouare.OtherPackage.ItemDecoration;
+import com.elior.guesswhoyouare.CustomAdaptersPackage.CustomAdapterFavorites;
+import com.elior.guesswhoyouare.OthersPackage.ItemDecoration;
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 
-public class FavoritesFace extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class FavoritesFaceActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FaceViewModelFavorites mFaceViewModelFavorites;
     private RecyclerView recyclerView;
@@ -108,7 +108,7 @@ public class FavoritesFace extends AppCompatActivity implements NavigationView.O
             finish();
             startActivity(getIntent());  // Refresh activity
 
-            Toast toast = Toast.makeText(FavoritesFace.this, "The list are refreshed!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(FavoritesFaceActivity.this, "The list are refreshed!", Toast.LENGTH_SHORT);
             View view = toast.getView();
             view.getBackground().setColorFilter(getResources().getColor(R.color.colorLightBlue), PorterDuff.Mode.SRC_IN);
             TextView text = view.findViewById(android.R.id.message);
@@ -150,10 +150,10 @@ public class FavoritesFace extends AppCompatActivity implements NavigationView.O
                 FaceFavorites current = adapterFavorites.getFaceAtPosition(position);
 
                 if (direction == ItemTouchHelper.RIGHT) {
-                    Toast.makeText(FavoritesFace.this, "Deleting...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(FavoritesFaceActivity.this, "Deleting...", Toast.LENGTH_LONG).show();
                     mFaceViewModelFavorites.deleteFace(current);
 
-                    Intent intentDeleteData = new Intent(FavoritesFace.this, DeleteFace.class);
+                    Intent intentDeleteData = new Intent(FavoritesFaceActivity.this, DeleteFaceActivity.class);
                     startActivity(intentDeleteData);
                 }
             }
@@ -190,10 +190,10 @@ public class FavoritesFace extends AppCompatActivity implements NavigationView.O
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.intentMainActivity) {
-            Intent intentBackMainActivity = new Intent(FavoritesFace.this, MainActivity.class);
+            Intent intentBackMainActivity = new Intent(FavoritesFaceActivity.this, MainActivity.class);
             startActivity(intentBackMainActivity);
         } else if (id == R.id.deleteAllDataFavorites) {
-            Intent intentDeleteAllData = new Intent(FavoritesFace.this, DeleteAllDataFavorites.class);
+            Intent intentDeleteAllData = new Intent(FavoritesFaceActivity.this, DeleteAllDataFavoritesActivity.class);
             startActivity(intentDeleteAllData);
         }
 

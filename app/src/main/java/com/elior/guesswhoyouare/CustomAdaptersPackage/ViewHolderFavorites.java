@@ -1,4 +1,4 @@
-package com.elior.guesswhoyouare.AdapterPackage;
+package com.elior.guesswhoyouare.CustomAdaptersPackage;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;

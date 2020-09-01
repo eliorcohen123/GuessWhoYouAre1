@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import com.elior.guesswhoyouare.R;
 
-public class DeleteFace extends AppCompatActivity implements View.OnClickListener {
+public class DeleteFaceActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnOK;
 

@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.favorites) {
-            Intent intentFavorite = new Intent(this, FavoritesFace.class);
+            Intent intentFavorite = new Intent(this, FavoritesFaceActivity.class);
             startActivity(intentFavorite);
         } else if (id == R.id.shareIntentApp) {
             Intent sendIntent = new Intent();
@@ -431,7 +431,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             case R.id.btnSave:
                 try {
                     if (region != null) {
-                        Intent i = new Intent(MainActivity.this, AddFace.class);
+                        Intent i = new Intent(MainActivity.this, AddFaceActivity.class);
                         i.putExtra("byteArray", bitmapData);
                         i.putExtra("age", region.ageAppearances().get(0).name());
                         i.putExtra("gender", region.genderAppearances().get(0).name());

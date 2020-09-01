@@ -16,7 +16,7 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-        android:name=".OtherPackage.NearByApplication"
+        android:name=".OthersPackage.NearByApplication"
         android:allowBackup="true"
         android:icon="@drawable/guessicon"
         android:label="@string/app_name"
@@ -30,12 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PagesPackage.FavoritesFace" />
-        <activity android:name=".PagesPackage.AddFace" />
-        <activity android:name=".PagesPackage.DeleteFace" />
-        <activity android:name=".PagesPackage.DeleteAllDataFavorites" />
+        <activity android:name=".PagesPackage.FavoritesFaceActivity" />
+        <activity android:name=".PagesPackage.AddFaceActivity" />
+        <activity android:name=".PagesPackage.DeleteFaceActivity" />
+        <activity android:name=".PagesPackage.DeleteAllDataFavoritesActivity" />
 
-        <service android:name=".OtherPackage.MyFirebaseMessagingService">
+        <service android:name=".OthersPackage.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

@@ -1,4 +1,4 @@
-package com.elior.guesswhoyouare.OtherPackage;
+package com.elior.guesswhoyouare.OthersPackage;
 
 import android.app.Application;
 

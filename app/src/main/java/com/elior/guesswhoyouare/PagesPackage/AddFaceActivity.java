@@ -15,7 +15,7 @@ import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceViewModelFavorites;
 
-public class AddFace extends AppCompatActivity implements View.OnClickListener {
+public class AddFaceActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FaceViewModelFavorites faceViewModelFavorites;
     private TextView age, gender, appearance, textViewOK;
@@ -49,7 +49,7 @@ public class AddFace extends AppCompatActivity implements View.OnClickListener {
 
         btnBack = findViewById(R.id.btnBack);
 
-        faceViewModelFavorites = ViewModelProviders.of(AddFace.this).get(FaceViewModelFavorites.class);
+        faceViewModelFavorites = ViewModelProviders.of(AddFaceActivity.this).get(FaceViewModelFavorites.class);
     }
 
     private void initListeners() {
@@ -82,7 +82,7 @@ public class AddFace extends AppCompatActivity implements View.OnClickListener {
                 faceViewModelFavorites.insert(faceFavorites);
 
                 // Pass from AddFace to ActivityFavorites
-                Intent intentAddInternetToMain = new Intent(AddFace.this, FavoritesFace.class);
+                Intent intentAddInternetToMain = new Intent(AddFaceActivity.this, FavoritesFaceActivity.class);
                 startActivity(intentAddInternetToMain);
                 break;
             case R.id.btnBack:
