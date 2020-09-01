@@ -23,17 +23,17 @@
         android:roundIcon="@drawable/guessicon"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".ClassesPackage.MainActivity">
+        <activity android:name=".PagesPackage.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ClassesPackage.FavoritesFace" />
-        <activity android:name=".ClassesPackage.AddFace" />
-        <activity android:name=".ClassesPackage.DeleteFace" />
-        <activity android:name=".ClassesPackage.DeleteAllDataFavorites" />
+        <activity android:name=".PagesPackage.FavoritesFace" />
+        <activity android:name=".PagesPackage.AddFace" />
+        <activity android:name=".PagesPackage.DeleteFace" />
+        <activity android:name=".PagesPackage.DeleteAllDataFavorites" />
 
         <service android:name=".OtherPackage.MyFirebaseMessagingService">
             <intent-filter>

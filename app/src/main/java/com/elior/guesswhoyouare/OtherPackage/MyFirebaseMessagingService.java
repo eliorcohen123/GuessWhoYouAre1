@@ -11,7 +11,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
-import com.elior.guesswhoyouare.ClassesPackage.MainActivity;
+import com.elior.guesswhoyouare.PagesPackage.MainActivity;
 import com.elior.guesswhoyouare.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;

@@ -1,4 +1,4 @@
-package com.elior.guesswhoyouare.ClassesPackage;
+package com.elior.guesswhoyouare.PagesPackage;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;

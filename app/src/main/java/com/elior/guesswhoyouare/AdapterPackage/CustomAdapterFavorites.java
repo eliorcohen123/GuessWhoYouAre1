@@ -14,23 +14,23 @@ import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
 
 import java.util.List;
 
-public class FaceListAdapterFavorites extends RecyclerView.Adapter<FaceViewHolder> {
+public class CustomAdapterFavorites extends RecyclerView.Adapter<ViewHolderFavorites> {
 
     private final LayoutInflater mInflater;
     private List<FaceFavorites> mFaceList;
 
-    public FaceListAdapterFavorites(Context context) {
+    public CustomAdapterFavorites(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public FaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolderFavorites onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.recyclerview_item_favorites, parent, false);
-        return new FaceViewHolder(itemView);
+        return new ViewHolderFavorites(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final FaceViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolderFavorites holder, final int position) {
         if (mFaceList != null) {
             final FaceFavorites current = mFaceList.get(position);
             try {

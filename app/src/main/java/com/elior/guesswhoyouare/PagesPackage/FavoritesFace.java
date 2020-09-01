@@ -1,4 +1,4 @@
-package com.elior.guesswhoyouare.ClassesPackage;
+package com.elior.guesswhoyouare.PagesPackage;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -33,7 +33,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elior.guesswhoyouare.AdapterPackage.FaceListAdapterFavorites;
+import com.elior.guesswhoyouare.AdapterPackage.CustomAdapterFavorites;
 import com.elior.guesswhoyouare.OtherPackage.ItemDecoration;
 import com.elior.guesswhoyouare.R;
 import com.elior.guesswhoyouare.RoomFavoritesPackage.FaceFavorites;
@@ -43,7 +43,7 @@ public class FavoritesFace extends AppCompatActivity implements NavigationView.O
 
     private FaceViewModelFavorites mFaceViewModelFavorites;
     private RecyclerView recyclerView;
-    private FaceListAdapterFavorites adapterFavorites;
+    private CustomAdapterFavorites adapterFavorites;
     private Paint p;
     private DrawerLayout drawer;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -69,7 +69,7 @@ public class FavoritesFace extends AppCompatActivity implements NavigationView.O
         swipeRefreshLayout = findViewById(R.id.swipe_containerFrag);
         recyclerView = findViewById(R.id.face_list);
 
-        adapterFavorites = new FaceListAdapterFavorites(this);
+        adapterFavorites = new CustomAdapterFavorites(this);
 
         p = new Paint();
     }

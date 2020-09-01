@@ -7,14 +7,14 @@ import android.widget.TextView;
 
 import com.elior.guesswhoyouare.R;
 
-class FaceViewHolder extends RecyclerView.ViewHolder {
+class ViewHolderFavorites extends RecyclerView.ViewHolder {
 
     TextView age1;
     TextView gender1;
     TextView appearance1;
     ImageView image1;
 
-    FaceViewHolder(View itemView) {
+    ViewHolderFavorites(View itemView) {
         super(itemView);
         age1 = itemView.findViewById(R.id.myAge1);
         gender1 = itemView.findViewById(R.id.myGender1);
