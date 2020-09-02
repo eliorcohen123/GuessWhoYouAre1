@@ -16,6 +16,7 @@ class ViewHolderFavorites extends RecyclerView.ViewHolder {
 
     ViewHolderFavorites(View itemView) {
         super(itemView);
+
         age1 = itemView.findViewById(R.id.myAge1);
         gender1 = itemView.findViewById(R.id.myGender1);
         appearance1 = itemView.findViewById(R.id.myAppearance1);

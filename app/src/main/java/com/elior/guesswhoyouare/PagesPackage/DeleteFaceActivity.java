@@ -14,7 +14,7 @@ public class DeleteFaceActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.delete_face);
+        setContentView(R.layout.activity_delete_face);
 
         initUI();
         initListeners();
